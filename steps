@@ -1,0 +1,9 @@
+Steps for create new Projects from CLI :
+1. Open the integrated terminal.
+2. Change directories (cd) to the folder that will contain the project folder.
+3. .NET CLI 
+    "dotnet new sln 
+    dotnet new webapi -o Todo.Api 
+    dotnet sln add (ls -r **/*.csproj)
+    dotnet new gitignore
+    dotnet build"
