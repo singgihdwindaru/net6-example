@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Api", "Todo.Api\Todo.Api.csproj", "{91316BA2-AB4D-4B8C-B6D9-0E6957BEBEBD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F77CB742-2902-4F3A-93D7-A39683771839}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Api", "src\Todo.Api\Todo.Api.csproj", "{EF134624-30CF-488A-92FB-702F6D4D736F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +16,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{91316BA2-AB4D-4B8C-B6D9-0E6957BEBEBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{91316BA2-AB4D-4B8C-B6D9-0E6957BEBEBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{91316BA2-AB4D-4B8C-B6D9-0E6957BEBEBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{91316BA2-AB4D-4B8C-B6D9-0E6957BEBEBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF134624-30CF-488A-92FB-702F6D4D736F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF134624-30CF-488A-92FB-702F6D4D736F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF134624-30CF-488A-92FB-702F6D4D736F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF134624-30CF-488A-92FB-702F6D4D736F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EF134624-30CF-488A-92FB-702F6D4D736F} = {F77CB742-2902-4F3A-93D7-A39683771839}
 	EndGlobalSection
 EndGlobal
