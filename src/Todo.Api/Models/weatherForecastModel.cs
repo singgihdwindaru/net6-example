@@ -1,6 +1,8 @@
-namespace Todo.Api;
+using System.Collections.Generic;
 
-public class WeatherForecast
+namespace Todo.Api.Models;
+
+public class weatherForecastModel
 {
     public DateTime Date { get; set; }
 
@@ -9,4 +11,8 @@ public class WeatherForecast
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
     public string? Summary { get; set; }
+}
+public interface IWeatherForecastNoSqlRepo
+{   
+    IEnumerable<weatherForecastModel> GetData();
 }

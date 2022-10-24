@@ -4,6 +4,7 @@ Steps for create new Projects from CLI :
 3. .NET CLI 
     "dotnet new sln 
     dotnet new webapi -o src/Todo.Api 
+    dotnet new xunit -o src/Todo.Api.Tests
     dotnet sln add src/**/*.csproj
     dotnet new gitignore
     dotnet build"
