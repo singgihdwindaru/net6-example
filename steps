@@ -8,3 +8,5 @@ Steps for create new Projects from CLI :
     dotnet sln add src/**/*.csproj
     dotnet new gitignore
     dotnet build"
+Packages list :
+- dotnet add package MySql.Data --version 8.0.30

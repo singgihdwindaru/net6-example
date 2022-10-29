@@ -1,4 +1,4 @@
-namespace Todo.Api.Tests.Test_Controllers;
+namespace Todo.Api.Tests.test_controllers;
 
 public class weatherForecastController_test
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Todo.Api.Models;
+using Todo.Api.models;
 
-namespace Todo.Api.Controllers;
+namespace Todo.Api.controllers;
 
 [ApiController]
 [Route("[controller]")]
