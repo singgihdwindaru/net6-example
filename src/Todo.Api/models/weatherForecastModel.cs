@@ -22,3 +22,7 @@ public interface IWeatherForecastNoSqlRepo
 {
     IEnumerable<weatherForecastModel.dto> GetData();
 }
+public interface IWeatherForecastUsecase
+{
+    IEnumerable<weatherForecastModel.response> GetData(weatherForecastModel.request request);
+}

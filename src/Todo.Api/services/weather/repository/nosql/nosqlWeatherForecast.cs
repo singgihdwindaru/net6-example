@@ -1,8 +1,8 @@
 using Todo.Api.models;
 
-namespace Todo.Api.Repositories.NoSql;
+namespace Todo.Api.services.weather.repository.nosql;
 
-public class weatherForcastNoSqlRepo : IWeatherForecastNoSqlRepo
+public class nosqlWeatherForecast : IWeatherForecastNoSqlRepo
 {
     private static readonly string[] Summaries = new[]
     {

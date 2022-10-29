@@ -1,18 +1,19 @@
 using Todo.Api.models;
-using Todo.Api.Repositories.NoSql;
+using Todo.Api.services.weather.repository.nosql;
+using Todo.Api.services.weather.usecase;
 
+static void initOthers(WebApplicationBuilder builder)
+{
+    builder.Services.AddScoped<IWeatherForecastNoSqlRepo, nosqlWeatherForecast>();
+}
+static void initRepositories(WebApplicationBuilder builder)
+{
+    builder.Services.AddScoped<IWeatherForecastNoSqlRepo, nosqlWeatherForecast>();
+}
+static void initUsecase(WebApplicationBuilder builder)
+{
+    builder.Services.AddScoped<IWeatherForecastUsecase, weatherUsecase>();
 
-static void initOthers (WebApplicationBuilder builder)
-{
-    builder.Services.AddScoped<IWeatherForecastNoSqlRepo, weatherForcastNoSqlRepo>();
-}
-static void initRepositories (WebApplicationBuilder builder)
-{
-    builder.Services.AddScoped<IWeatherForecastNoSqlRepo, weatherForcastNoSqlRepo>();
-}
-static void initServices (WebApplicationBuilder builder)
-{
-    builder.Services.AddScoped<IWeatherForecastNoSqlRepo, weatherForcastNoSqlRepo>();
 }
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 initOthers(builder);
 initRepositories(builder);
-initServices(builder);
+initUsecase(builder);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
