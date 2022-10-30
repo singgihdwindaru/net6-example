@@ -35,6 +35,7 @@ public class weatherUsecase : IWeatherForecastUsecase
 
     public IEnumerable<weatherForecastModel.response> GetData()
     {
+        
         List<weatherForecastModel.response> result = new List<weatherForecastModel.response>();
         try
         {

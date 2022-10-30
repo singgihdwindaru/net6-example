@@ -6,6 +6,7 @@ public class weatherForecastModel
     {
         public long id { get; set;}
     }
+    
     public class response
     {
         public DateTime Date { get; set; }
