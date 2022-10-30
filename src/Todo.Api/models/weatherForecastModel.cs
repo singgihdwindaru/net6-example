@@ -4,7 +4,7 @@ public class weatherForecastModel
 {
     public class dto : response
     {
-        public long id { get; }
+        public long id { get; set;}
     }
     public class response
     {
@@ -12,7 +12,8 @@ public class weatherForecastModel
 
         public int TemperatureC { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        // public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        public int TemperatureF { get; set; }
 
         public string? Summary { get; set; }
     }
@@ -22,7 +23,13 @@ public interface IWeatherForecastNoSqlRepo
 {
     IEnumerable<weatherForecastModel.dto> GetData();
 }
+public interface IWeatherForecastMysqlRepo
+{
+    IEnumerable<weatherForecastModel.dto> GetAll();
+    weatherForecastModel.dto GetById(long id);
+}
 public interface IWeatherForecastUsecase
 {
-    IEnumerable<weatherForecastModel.response> GetData(weatherForecastModel.request request);
+    IEnumerable<weatherForecastModel.response> GetData();
+    weatherForecastModel.response GetById(long id);
 }
