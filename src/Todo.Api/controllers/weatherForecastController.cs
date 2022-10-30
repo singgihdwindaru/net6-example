@@ -50,3 +50,36 @@ public class WeatherForecastController : ControllerBase
         return Ok(_weatherForecast.GetById(id));
     }
 }
+
+/* example response
+{
+    "code": 400,
+    "message": "success",
+    "error": true,
+    "data": {
+      "column": [
+        "date",
+        "temperatureC",
+        "temperatureF",
+        "summary"
+      ],
+      "values": [
+        [
+          "0001-01-01T00:00:00",
+          27,
+          80,
+          "Freezing"
+        ],
+        [
+          "0001-01-01T00:00:00",
+          27,
+          80,
+          "Freezing"
+        ]
+      ]
+   }
+}
+
+
+
+*/
