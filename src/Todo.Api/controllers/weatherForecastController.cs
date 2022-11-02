@@ -19,29 +19,8 @@ public class WeatherForecastController : ControllerBase
     public IActionResult Get()
     {
         IEnumerable<weatherForecastModel.response> data = _weatherForecast.GetData();
-        var l1 = new List<List<object>>();
-        foreach (var item in data)
-        {
-            List<object> l2 = new List<object>();
-            l2.Add(item.Date);
-            l2.Add(item.TemperatureC);
-            l2.Add(item.TemperatureF);
-            l2.Add(item.Summary);
-            l1.Add(l2);
-        }
-
-        httpResponse.Root rsp = new httpResponse.Root();
-        rsp.code = 200;
-        rsp.message = "success";
-        rsp.error = false;
-        rsp.data = new httpResponse.Data
-        {
-            // Todo get column name by reflection model or add attribute
-            column = new List<string> {
-                "date","temperatureC","temperatureF","summary"
-            },
-            values = l1
-        };
+        // httpResponse.Root<object> rsp = common.WebResponse.HttpResponse<object>(200, "success", false, data);
+        httpResponse.Root<object> rsp = common.WebResponse.HttpResponseColumnRows<object>(200, "success", false, data);
         return Ok(rsp);
     }
     [HttpGet("~/WeatherForecast/{id}")]

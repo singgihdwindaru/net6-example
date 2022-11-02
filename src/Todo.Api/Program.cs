@@ -4,23 +4,22 @@ using Todo.Api.services.weather.repository.mysql;
 using Todo.Api.services.weather.repository.nosql;
 using Todo.Api.services.weather.usecase;
 
-static void initOthers(WebApplicationBuilder builder)
+var builder = WebApplication.CreateBuilder(args);
+string connStr = builder.Configuration["Databases:mysql"];
+
+void initOthers(WebApplicationBuilder builder)
 {
 }
-static void initRepositories(WebApplicationBuilder builder)
+void initRepositories(WebApplicationBuilder builder)
 {
-    string connStr = builder.Configuration["Databases:mysql"];
     builder.Services.AddScoped<IWeatherForecastMysqlRepo, mysqlWeatherForecast>(x => new mysqlWeatherForecast(connStr));
     builder.Services.AddScoped<IWeatherForecastNoSqlRepo, nosqlWeatherForecast>();
-
 }
-static void initUsecase(WebApplicationBuilder builder)
+void initUsecase(WebApplicationBuilder builder)
 {
     builder.Services.AddScoped<IWeatherForecastUsecase, weatherUsecase>();
 }
 
-
-var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 initOthers(builder);
