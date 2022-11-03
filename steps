@@ -7,6 +7,15 @@ Steps for create new Projects from CLI :
     dotnet new xunit -o src/Todo.Api.Tests
     dotnet sln add src/**/*.csproj
     dotnet new gitignore
-    dotnet build"
+    dotnet build
+    //dotnet add reference src/Todo.Api.csproj
+"
+vscode extension :
+- C#
+- .NET Install Tool for Extension Authors
+- .NET Core Test Explorer
+- (optional) vscode-solution-explorer
+- (optional) SQL Server (mssql)
+
 Packages list :
 - dotnet add package MySql.Data --version 8.0.30
