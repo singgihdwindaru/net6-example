@@ -9,11 +9,11 @@ namespace Todo.Api.controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
+    // private readonly ILogger<WeatherForecastController> _logger;
     private readonly IWeatherForecastUsecase _weatherForecast;
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForecastUsecase weatherForecast)
+    public WeatherForecastController(IWeatherForecastUsecase weatherForecast)
     {
-        _logger = logger;
+        // _logger = logger;
         _weatherForecast = weatherForecast;
     }
 
@@ -31,7 +31,7 @@ public class WeatherForecastController : ControllerBase
                 rsp = common.WebResponse.HttpResponseColumnRows<object>(code, msg, true, new List<weatherForecastModel.response>());
                 return StatusCode(code, rsp);
             }
-            rsp = common.WebResponse.HttpResponseColumnRows<object>(200, "success", false, data.ToArray());
+            rsp = common.WebResponse.HttpResponseColumnRows<object>(200, "success", false, data.ToList());
         }
         catch (System.Exception e)
         {

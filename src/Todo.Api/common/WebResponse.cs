@@ -34,8 +34,7 @@ public class WebResponse
         Type type = values.GetType();
 
         // if (typeof(IEnumerable<>).IsAssignableFrom(type))
-        // if (type.GetInterface(nameof(ICollection)) != null)
-        if (type.IsGenericTypeDefinition)
+        if (type.GetInterface(nameof(ICollection)) != null)
         {
             //TODO : handle error kalo bukan IEnumerable<>
             PropertyInfo[] props = type.GenericTypeArguments[0].GetProperties();
