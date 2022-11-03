@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Todo.Api.models;
+using Todo.Api.common;
+using System.Net;
 
 namespace Todo.Api.controllers;
 
@@ -18,9 +20,26 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("~/WeatherForecast")]
     public IActionResult Get()
     {
-        IEnumerable<weatherForecastModel.response> data = _weatherForecast.GetData();
-        // httpResponse.Root<object> rsp = common.WebResponse.HttpResponse<object>(200, "success", false, data);
-        httpResponse.Root<object> rsp = common.WebResponse.HttpResponseColumnRows<object>(200, "success", false, data);
+        httpResponse.Root<object> rsp;
+        try
+        {
+            IEnumerable<weatherForecastModel.response> data = _weatherForecast.GetData();
+            if (data == null)
+            {
+                int code = StatusCodes.Status500InternalServerError;
+                var msg = "Internal Server Error";
+                rsp = common.WebResponse.HttpResponseColumnRows<object>(code, msg, true, new List<weatherForecastModel.response>());
+                return StatusCode(code, rsp);
+            }
+            rsp = common.WebResponse.HttpResponseColumnRows<object>(200, "success", false, data.ToArray());
+            // rsp = common.WebResponse.HttpResponse(200, "success", false, rsp);
+        }
+        catch (System.Exception e)
+        {
+          // TODO : create a nice error handling
+            return StatusCode((int)HttpStatusCode.InternalServerError, e);
+        }
+
         return Ok(rsp);
     }
     [HttpGet("~/WeatherForecast/{id}")]
