@@ -20,7 +20,7 @@ public class WeatherForecastControllerTest
     {
         // TODO : Dirapihin lagi codenya !!
         var now = DateTime.Now;
-        string response = JsonSerializer.Serialize(
+        string expectedResult = JsonSerializer.Serialize(
             new
             {
                 code = 200,
@@ -35,21 +35,21 @@ public class WeatherForecastControllerTest
                 }
             }
         );
-        weatherForecastModel.response expectedResult = new weatherForecastModel.response
+        weatherForecastModel.response data = new weatherForecastModel.response
         {
             Date = now,
             TemperatureC = 2,
             TemperatureF = 5,
             Summary = "summary"
         };
-        _mockWeatherForecastUsecase.Setup(x => x.GetById(1)).Returns(expectedResult);
+        _mockWeatherForecastUsecase.Setup(x => x.GetById(42)).Returns(data);
         var controller = new WeatherForecastController(_mockWeatherForecastUsecase.Object);
 
         // Act
         IActionResult actionResult = controller.GetById(42);
         string actualResult = JsonSerializer.Serialize((actionResult as OkObjectResult).Value);
 
-        response.Should().BeEquivalentTo(actualResult);
+        expectedResult.Should().BeEquivalentTo(actualResult);
     }
     [Fact]
     public void TestGetData()
@@ -61,7 +61,7 @@ public class WeatherForecastControllerTest
             new object[]{now,2,5,"summary"},
             new object[]{now,4,7,"summary2"},
         };
-        string response = JsonSerializer.Serialize(
+        string expectedResult = JsonSerializer.Serialize(
             new
             {
                 code = 200,
@@ -73,7 +73,7 @@ public class WeatherForecastControllerTest
                 }
             }
         );
-        IEnumerable<weatherForecastModel.response> expectedResult = new List<weatherForecastModel.response>(){
+        IEnumerable<weatherForecastModel.response> data = new List<weatherForecastModel.response>(){
             new weatherForecastModel.response
             {
                 Date = now,
@@ -89,14 +89,14 @@ public class WeatherForecastControllerTest
                 Summary = "summary2"
             }
         };
-        _mockWeatherForecastUsecase.Setup(x => x.GetData()).Returns(expectedResult.ToList());
+        _mockWeatherForecastUsecase.Setup(x => x.GetData()).Returns(data.ToList());
 
         // Act
         var controller = new WeatherForecastController(_mockWeatherForecastUsecase.Object);
         IActionResult actionResult = controller.Get();
         string actualResult = JsonSerializer.Serialize((actionResult as OkObjectResult).Value);
 
-        response.Should().BeEquivalentTo(actualResult);
+        expectedResult.Should().BeEquivalentTo(actualResult);
 
     }
 }
