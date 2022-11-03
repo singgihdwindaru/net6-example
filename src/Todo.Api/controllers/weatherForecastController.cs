@@ -31,7 +31,7 @@ public class WeatherForecastController : ControllerBase
                 rsp = common.WebResponse.HttpResponseColumnRows<object>(code, msg, true, new List<weatherForecastModel.response>());
                 return StatusCode(code, rsp);
             }
-            rsp = common.WebResponse.HttpResponseColumnRows<object>(200, "success", false, data.ToArray());
+            rsp = common.WebResponse.HttpResponseColumnRows<object>(200, "success", false, data.ToList());
         }
         catch (System.Exception e)
         {
