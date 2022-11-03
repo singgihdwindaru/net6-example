@@ -32,11 +32,10 @@ public class WeatherForecastController : ControllerBase
                 return StatusCode(code, rsp);
             }
             rsp = common.WebResponse.HttpResponseColumnRows<object>(200, "success", false, data.ToArray());
-            // rsp = common.WebResponse.HttpResponse(200, "success", false, rsp);
         }
         catch (System.Exception e)
         {
-          // TODO : create a nice error handling
+            // TODO : create a nice error handling
             return StatusCode((int)HttpStatusCode.InternalServerError, e);
         }
 
@@ -45,7 +44,26 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("~/WeatherForecast/{id}")]
     public IActionResult GetById(long id)
     {
-        return Ok(_weatherForecast.GetById(id));
+        httpResponse.Root<object> rsp;
+        try
+        {
+            weatherForecastModel.response data = _weatherForecast.GetById(id);
+            if (data == null)
+            {
+                int code = StatusCodes.Status500InternalServerError;
+                var msg = "Internal Server Error";
+                rsp = common.WebResponse.HttpResponse(code, msg, true, null);
+                return StatusCode(code, rsp);
+            }
+            rsp = common.WebResponse.HttpResponse(200, "success", false, data);
+        }
+        catch (System.Exception e)
+        {
+            // TODO : create a nice error handling
+            return StatusCode((int)HttpStatusCode.InternalServerError, e);
+        }
+
+        return Ok(rsp);
     }
 }
 
