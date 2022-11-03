@@ -9,11 +9,11 @@ namespace Todo.Api.controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
+    // private readonly ILogger<WeatherForecastController> _logger;
     private readonly IWeatherForecastUsecase _weatherForecast;
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForecastUsecase weatherForecast)
+    public WeatherForecastController(IWeatherForecastUsecase weatherForecast)
     {
-        _logger = logger;
+        // _logger = logger;
         _weatherForecast = weatherForecast;
     }
 

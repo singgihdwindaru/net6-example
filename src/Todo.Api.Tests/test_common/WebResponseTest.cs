@@ -1,6 +1,7 @@
 using Todo.Api.models;
-namespace Todo.Api.Tests.test_controllers;
 using FluentAssertions;
+
+namespace Todo.Api.Tests.test_common;
 
 public class WebResponseTest
 {
@@ -29,8 +30,8 @@ public class WebResponseTest
         foreach (var item in testTable)
         {
             var actualResult = common.WebResponse.HttpResponse(item.arg.code, item.arg.message, item.arg.isError, item.arg.data);
-            // item.expectedResult.Should().BeEquivalentTo(actualResult);
-            Assert.Equal(item.expectedResult.code, actualResult.code);
+            item.expectedResult.Should().BeEquivalentTo(actualResult);
+            // Assert.Equal(item.expectedResult.code, actualResult.code);
         }
     }
 }
