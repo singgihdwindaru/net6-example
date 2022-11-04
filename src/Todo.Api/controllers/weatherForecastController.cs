@@ -32,7 +32,6 @@ public class WeatherForecastController : ControllerBase
                 rsp = helper.HttpResponseColumnRows<object>(code, msg, true, new List<response>());
                 return StatusCode(code, rsp);
             }
-            var d = 
             rsp = helper.HttpResponseColumnRows<object>(200, "success", false, data.ToList());
         }
         catch (System.Exception e)
