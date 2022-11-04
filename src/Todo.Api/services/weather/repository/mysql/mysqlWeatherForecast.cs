@@ -1,10 +1,12 @@
 using MySql.Data.MySqlClient;
 using Todo.Api.models;
+using static Todo.Api.models.weatherForecastModel;
 
 namespace Todo.Api.services.weather.repository.mysql;
 
 public partial class mysqlWeatherForecast : IWeatherForecastMysqlRepo
 {
+    
     protected readonly string _mysqlConnString;
     public mysqlWeatherForecast(string connString)
     {
@@ -45,6 +47,7 @@ public partial class mysqlWeatherForecast : IWeatherForecastMysqlRepo
         }
         return result.Last();
     }
+   
     private static void fetch(List<weatherForecastModel.dto> result, MySqlCommand cmd)
     {
         using (MySqlDataReader rdr = cmd.ExecuteReader())

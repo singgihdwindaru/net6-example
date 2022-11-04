@@ -16,7 +16,7 @@ public class httpResponse
         public DataColumnRow()
         {
             columns = new List<string>();
-            rows =new List<List<object>>();
+            rows = new List<List<object>>();
         }
     }
 

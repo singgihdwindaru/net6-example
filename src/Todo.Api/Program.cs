@@ -3,6 +3,7 @@ using Todo.Api.models;
 using Todo.Api.services.weather.repository.mysql;
 using Todo.Api.services.weather.repository.nosql;
 using Todo.Api.services.weather.usecase;
+using static Todo.Api.models.weatherForecastModel;
 
 var builder = WebApplication.CreateBuilder(args);
 string connStr = builder.Configuration["Databases:mysql"];
