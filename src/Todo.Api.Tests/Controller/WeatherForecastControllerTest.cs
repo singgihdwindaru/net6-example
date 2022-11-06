@@ -6,7 +6,7 @@ using FluentAssertions;
 using System.Text.Json;
 using static Todo.Api.models.weatherForecastModel;
 
-namespace Todo.Api.Tests.test_controllers;
+namespace Todo.Api.Tests.Controller;
 
 public class WeatherForecastControllerTest
 {
@@ -15,11 +15,11 @@ public class WeatherForecastControllerTest
     {
         _mockWeatherForecastUsecase = new Mock<IWeatherForecastUsecase>();
     }
-
     [Fact]
     public void TestGetById()
     {
         // TODO : Dirapihin lagi codenya !!
+
         var now = DateTime.Now;
         string expectedResult = JsonSerializer.Serialize(
             new
@@ -57,7 +57,7 @@ public class WeatherForecastControllerTest
     {
         // TODO : Dirapihin lagi codenya !!
         var now = DateTime.Now;
-        var columns = new object[]{"Date","TemperatureC","TemperatureF","Summary"};
+        var columns = new object[] { "Date", "TemperatureC", "TemperatureF", "Summary" };
         var rows = new List<object>(){
             new object[]{now,2,5,"summary"},
             new object[]{now,4,7,"summary2"},
@@ -68,9 +68,10 @@ public class WeatherForecastControllerTest
                 code = 200,
                 message = "success",
                 error = false,
-                data = new {
+                data = new
+                {
                     columns = columns,
-                    rows =rows,
+                    rows = rows,
                 }
             }
         );

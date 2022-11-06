@@ -8,6 +8,10 @@ public static class WebResponse
 {
     public static httpResponse.Root<object> HttpResponse(int code, string message, bool isError, object data)
     {
+        if (data == null)
+        {
+            return default;
+        }
         httpResponse.Root<object> rsp = new httpResponse.Root<object>();
         rsp.code = code;
         rsp.message = message;
