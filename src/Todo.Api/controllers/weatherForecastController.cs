@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Todo.Api.models;
-using Todo.Api.common;
 using System.Net;
+using static Todo.Api.models.weatherForecastModel;
+using helper = Todo.Api.Helper.WebResponse;
 
 namespace Todo.Api.controllers;
 
@@ -23,15 +24,15 @@ public class WeatherForecastController : ControllerBase
         httpResponse.Root<object> rsp;
         try
         {
-            IEnumerable<weatherForecastModel.response> data = _weatherForecast.GetData();
+            IEnumerable<response> data = _weatherForecast.GetData();
             if (data == null)
             {
                 int code = StatusCodes.Status500InternalServerError;
                 var msg = "Internal Server Error";
-                rsp = common.WebResponse.HttpResponseColumnRows<object>(code, msg, true, new List<weatherForecastModel.response>());
+                rsp = helper.HttpResponseColumnRows<object>(code, msg, true, new List<response>());
                 return StatusCode(code, rsp);
             }
-            rsp = common.WebResponse.HttpResponseColumnRows<object>(200, "success", false, data.ToList());
+            rsp = helper.HttpResponseColumnRows<object>(200, "success", false, data.ToList());
         }
         catch (System.Exception e)
         {
@@ -44,18 +45,18 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("~/WeatherForecast/{id}")]
     public IActionResult GetById(long id)
     {
-        httpResponse.Root<object> rsp;
+        httpResponse.Root<object>? rsp;
         try
         {
-            weatherForecastModel.response data = _weatherForecast.GetById(id);
+            response? data = _weatherForecast.GetById(id);
             if (data == null)
             {
                 int code = StatusCodes.Status500InternalServerError;
                 var msg = "Internal Server Error";
-                rsp = common.WebResponse.HttpResponse(code, msg, true, null);
+                rsp = helper.HttpResponse(code, msg, true, null);
                 return StatusCode(code, rsp);
             }
-            rsp = common.WebResponse.HttpResponse(200, "success", false, data);
+            rsp = helper.HttpResponse(200, "success", false, data);
         }
         catch (System.Exception e)
         {

@@ -1,4 +1,5 @@
 using Todo.Api.models;
+using static Todo.Api.models.weatherForecastModel;
 
 namespace Todo.Api.services.weather.repository.nosql;
 

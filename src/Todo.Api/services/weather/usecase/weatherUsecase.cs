@@ -1,4 +1,5 @@
 using Todo.Api.models;
+using static Todo.Api.models.weatherForecastModel;
 
 namespace Todo.Api.services.weather.usecase;
 
@@ -9,7 +10,7 @@ public class weatherUsecase : IWeatherForecastUsecase
     {
         _weather = weather;
     }
-    public weatherForecastModel.response GetById(long id)
+    public weatherForecastModel.response? GetById(long id)
     {
         weatherForecastModel.response result;
         try
@@ -33,7 +34,7 @@ public class weatherUsecase : IWeatherForecastUsecase
         }
     }
 
-    public IEnumerable<weatherForecastModel.response> GetData()
+    public IEnumerable<weatherForecastModel.response>? GetData()
     {
         
         List<weatherForecastModel.response> result = new List<weatherForecastModel.response>();
