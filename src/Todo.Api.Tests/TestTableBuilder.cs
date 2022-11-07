@@ -6,8 +6,8 @@ public class TestTableBuilder : IXunitSerializable
 {
     private string _testName;
     private readonly TestTable _testTable;
-    // required for deserializer
-    public TestTableBuilder() { }
+    public TestTableBuilder() { }// required for deserializer
+
 
     public TestTableBuilder(TestTable testTable)
     {

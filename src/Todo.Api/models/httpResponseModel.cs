@@ -7,7 +7,7 @@ public class httpResponse
         public int code { get; set; }
         public string message { get; set; }
         public bool error { get; set; }
-        public T data { get; set; }
+        public T? data { get; set; }
     }
     public class DataColumnRow
     {

@@ -6,12 +6,12 @@ namespace Todo.Api.Helper;
 
 public static class WebResponse
 {
-    public static httpResponse.Root<object> HttpResponse(int code, string message, bool isError, object data)
+    public static httpResponse.Root<object>? HttpResponse(int code, string message, bool isError, object? data)
     {
-        if (data == null)
-        {
-            return default;
-        }
+        // if (data == null)
+        // {
+        //     return default;
+        // }
         httpResponse.Root<object> rsp = new httpResponse.Root<object>();
         rsp.code = code;
         rsp.message = message;
@@ -46,7 +46,7 @@ public static class WebResponse
             data.columns = columns.ToList();
             foreach (var item in (IEnumerable<T>)values)
             {
-                List<object> lS = new List<object>();
+                List<object>? lS = new List<object>();
                 for (int i = 0; i < columns.Length; i++)
                 {
                     lS.Add(item.GetType().GetProperty(columns[i])?.GetValue(item, null));

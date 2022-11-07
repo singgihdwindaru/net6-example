@@ -4,17 +4,17 @@ public class weatherForecastModel
 {
     public interface IWeatherForecastNoSqlRepo
     {
-        IEnumerable<weatherForecastModel.dto> GetData();
+        IEnumerable<weatherForecastModel.dto>? GetData();
     }
     public interface IWeatherForecastMysqlRepo
     {
-        IEnumerable<weatherForecastModel.dto> GetAll();
-        weatherForecastModel.dto GetById(long id);
+        IEnumerable<weatherForecastModel.dto>? GetAll();
+        weatherForecastModel.dto? GetById(long id);
     }
     public interface IWeatherForecastUsecase
     {
-        IEnumerable<weatherForecastModel.response> GetData();
-        weatherForecastModel.response GetById(long id);
+        IEnumerable<weatherForecastModel.response>? GetData();
+        weatherForecastModel.response? GetById(long id);
     }
     
     public class dto

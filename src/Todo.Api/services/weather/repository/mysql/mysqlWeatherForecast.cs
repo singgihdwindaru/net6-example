@@ -13,7 +13,7 @@ public partial class mysqlWeatherForecast : IWeatherForecastMysqlRepo
         _mysqlConnString = connString;
     }
 
-    public IEnumerable<weatherForecastModel.dto> GetAll()
+    public IEnumerable<weatherForecastModel.dto>? GetAll()
     {
         List<weatherForecastModel.dto> result = new List<weatherForecastModel.dto>();
         try

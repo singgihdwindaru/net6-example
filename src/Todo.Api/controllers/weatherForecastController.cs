@@ -45,10 +45,10 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("~/WeatherForecast/{id}")]
     public IActionResult GetById(long id)
     {
-        httpResponse.Root<object> rsp;
+        httpResponse.Root<object>? rsp;
         try
         {
-            response data = _weatherForecast.GetById(id);
+            response? data = _weatherForecast.GetById(id);
             if (data == null)
             {
                 int code = StatusCodes.Status500InternalServerError;
