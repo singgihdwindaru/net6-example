@@ -16,6 +16,7 @@ public class WeatherForecastControllerTest
     {
         _mockWeatherForecastUsecase = new Mock<IWeatherForecastUsecase>();
     }
+    #region TestGetById
     public static TheoryData<TestTableBuilder> TestGetByIdCases()
     {
         List<TestTable> tp = new List<TestTable>();
@@ -81,6 +82,7 @@ public class WeatherForecastControllerTest
         }
         return data;
     }
+
     [Theory]
     [MemberData(nameof(TestGetByIdCases))]
     public void TestGetById(TestTableBuilder Case)
@@ -99,7 +101,10 @@ public class WeatherForecastControllerTest
         testData.ExpectedResult?.Should().BeEquivalentTo(actualResult);
     }
 
-    public static TheoryData<TestTableBuilder> TestGetDataCases()
+    #endregion End of TestGetById
+
+    #region  TestGet
+    public static TheoryData<TestTableBuilder> TestGetCases()
     {
         List<TestTable> tp = new List<TestTable>();
         var now = DateTime.Now;
@@ -178,9 +183,10 @@ public class WeatherForecastControllerTest
         }
         return data;
     }
+
     [Theory]
-    [MemberData(nameof(TestGetDataCases))]
-    public void TestGetData(TestTableBuilder Case)
+    [MemberData(nameof(TestGetCases))]
+    public void TestGet(TestTableBuilder Case)
     {
         TestTable testData = Case.Build();
         testData.Mock();
@@ -194,4 +200,6 @@ public class WeatherForecastControllerTest
         testData.ExpectedResult?.Should().BeEquivalentTo(actualResult);
 
     }
+    #endregion End of TestGet
+
 }

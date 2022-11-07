@@ -44,66 +44,66 @@ FNH:0
 end_of_record
 SF:/home/singgih/.Net/net6-example/src/Todo.Api/services/weather/usecase/weatherUsecase.cs
 FN:13,Todo.Api.models.weatherForecastModel/response Todo.Api.services.weather.usecase.weatherUsecase::GetById(System.Int64)
-FNDA:0,Todo.Api.models.weatherForecastModel/response Todo.Api.services.weather.usecase.weatherUsecase::GetById(System.Int64)
-DA:14,0
-DA:17,0
-DA:18,0
-DA:19,0
-DA:20,0
-DA:21,0
-DA:23,0
-DA:24,0
-DA:25,0
-DA:26,0
-DA:27,0
-DA:28,0
+FNDA:2,Todo.Api.models.weatherForecastModel/response Todo.Api.services.weather.usecase.weatherUsecase::GetById(System.Int64)
+DA:14,2
+DA:17,2
+DA:18,2
+DA:19,2
+DA:20,1
+DA:21,1
+DA:23,1
+DA:24,1
+DA:25,1
+DA:26,1
+DA:27,1
+DA:28,1
 DA:30,0
 DA:31,0
 DA:32,0
 DA:33,0
-DA:35,0
-BRDA:19,21,0,0
-BRDA:19,21,1,0
+DA:35,2
+BRDA:19,21,0,1
+BRDA:19,21,1,1
 FN:37,System.Collections.Generic.IEnumerable`1<Todo.Api.models.weatherForecastModel/response> Todo.Api.services.weather.usecase.weatherUsecase::GetData()
-FNDA:0,System.Collections.Generic.IEnumerable`1<Todo.Api.models.weatherForecastModel/response> Todo.Api.services.weather.usecase.weatherUsecase::GetData()
-DA:38,0
-DA:40,0
-DA:42,0
-DA:43,0
-DA:44,0
-DA:45,0
-DA:46,0
-DA:48,0
-DA:49,0
-DA:50,0
-DA:51,0
-DA:52,0
-DA:53,0
-DA:54,0
-DA:55,0
-DA:56,0
-DA:57,0
+FNDA:2,System.Collections.Generic.IEnumerable`1<Todo.Api.models.weatherForecastModel/response> Todo.Api.services.weather.usecase.weatherUsecase::GetData()
+DA:38,2
+DA:40,2
+DA:42,2
+DA:43,2
+DA:44,2
+DA:45,1
+DA:46,1
+DA:48,5
+DA:49,1
+DA:50,1
+DA:51,1
+DA:52,1
+DA:53,1
+DA:54,1
+DA:55,1
+DA:56,1
+DA:57,1
 DA:59,0
 DA:60,0
 DA:61,0
 DA:62,0
-DA:64,0
-BRDA:44,26,0,0
-BRDA:44,26,1,0
-BRDA:48,141,1,0
-BRDA:48,141,0,0
+DA:64,2
+BRDA:44,26,0,1
+BRDA:44,26,1,1
+BRDA:48,141,1,1
+BRDA:48,141,0,1
 FN:8,System.Void Todo.Api.services.weather.usecase.weatherUsecase::.ctor(Todo.Api.models.weatherForecastModel/IWeatherForecastMysqlRepo)
-FNDA:0,System.Void Todo.Api.services.weather.usecase.weatherUsecase::.ctor(Todo.Api.models.weatherForecastModel/IWeatherForecastMysqlRepo)
-DA:9,0
-DA:10,0
-DA:11,0
-DA:12,0
+FNDA:4,System.Void Todo.Api.services.weather.usecase.weatherUsecase::.ctor(Todo.Api.models.weatherForecastModel/IWeatherForecastMysqlRepo)
+DA:9,4
+DA:10,4
+DA:11,4
+DA:12,4
 LF:43
-LH:0
+LH:35
 BRF:6
-BRH:0
+BRH:6
 FNF:3
-FNH:0
+FNH:3
 end_of_record
 SF:/home/singgih/.Net/net6-example/src/Todo.Api/services/weather/repository/nosql/nosqlWeatherForecast.cs
 FN:12,System.Collections.Generic.IEnumerable`1<Todo.Api.models.weatherForecastModel/dto> Todo.Api.services.weather.repository.nosql.nosqlWeatherForecast::GetData()
@@ -248,38 +248,38 @@ FNH:7
 end_of_record
 SF:/home/singgih/.Net/net6-example/src/Todo.Api/models/weatherForecastModel.cs
 FN:21,System.Int64 Todo.Api.models.weatherForecastModel/dto::get_id()
-FNDA:0,System.Int64 Todo.Api.models.weatherForecastModel/dto::get_id()
-DA:22,0
+FNDA:2,System.Int64 Todo.Api.models.weatherForecastModel/dto::get_id()
+DA:22,2
 FN:22,System.DateTime Todo.Api.models.weatherForecastModel/dto::get_Date()
-FNDA:0,System.DateTime Todo.Api.models.weatherForecastModel/dto::get_Date()
-DA:23,0
+FNDA:4,System.DateTime Todo.Api.models.weatherForecastModel/dto::get_Date()
+DA:23,4
 FN:24,System.Int32 Todo.Api.models.weatherForecastModel/dto::get_TemperatureC()
-FNDA:0,System.Int32 Todo.Api.models.weatherForecastModel/dto::get_TemperatureC()
-DA:25,0
+FNDA:4,System.Int32 Todo.Api.models.weatherForecastModel/dto::get_TemperatureC()
+DA:25,4
 FN:27,System.Int32 Todo.Api.models.weatherForecastModel/dto::get_TemperatureF()
-FNDA:0,System.Int32 Todo.Api.models.weatherForecastModel/dto::get_TemperatureF()
-DA:28,0
+FNDA:4,System.Int32 Todo.Api.models.weatherForecastModel/dto::get_TemperatureF()
+DA:28,4
 FN:29,System.String Todo.Api.models.weatherForecastModel/dto::get_Summary()
-FNDA:0,System.String Todo.Api.models.weatherForecastModel/dto::get_Summary()
-DA:30,0
+FNDA:4,System.String Todo.Api.models.weatherForecastModel/dto::get_Summary()
+DA:30,4
 FN:34,System.DateTime Todo.Api.models.weatherForecastModel/response::get_Date()
-FNDA:6,System.DateTime Todo.Api.models.weatherForecastModel/response::get_Date()
-DA:35,6
+FNDA:14,System.DateTime Todo.Api.models.weatherForecastModel/response::get_Date()
+DA:35,14
 FN:36,System.Int32 Todo.Api.models.weatherForecastModel/response::get_TemperatureC()
-FNDA:6,System.Int32 Todo.Api.models.weatherForecastModel/response::get_TemperatureC()
-DA:37,6
+FNDA:14,System.Int32 Todo.Api.models.weatherForecastModel/response::get_TemperatureC()
+DA:37,14
 FN:39,System.Int32 Todo.Api.models.weatherForecastModel/response::get_TemperatureF()
-FNDA:6,System.Int32 Todo.Api.models.weatherForecastModel/response::get_TemperatureF()
-DA:40,6
+FNDA:14,System.Int32 Todo.Api.models.weatherForecastModel/response::get_TemperatureF()
+DA:40,14
 FN:41,System.String Todo.Api.models.weatherForecastModel/response::get_Summary()
-FNDA:6,System.String Todo.Api.models.weatherForecastModel/response::get_Summary()
-DA:42,6
+FNDA:14,System.String Todo.Api.models.weatherForecastModel/response::get_Summary()
+DA:42,14
 LF:9
-LH:4
+LH:9
 BRF:0
 BRH:0
 FNF:9
-FNH:4
+FNH:9
 end_of_record
 SF:/home/singgih/.Net/net6-example/src/Todo.Api/helper/WebResponse.cs
 FN:9,Todo.Api.models.httpResponse/Root`1<System.Object> Todo.Api.Helper.WebResponse::HttpResponse(System.Int32,System.String,System.Boolean,System.Object)
