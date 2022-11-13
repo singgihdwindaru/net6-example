@@ -40,7 +40,8 @@ public class WeatherUsecaseTest
                         TemperatureF = 5,
                         Summary = "summary"
                     };
-                    _mockWeatherForecastMysqlRepo.Setup(x => x.GetById(1)).Returns(data);
+                    (Exception? error, dto? res) result = (null, data);
+                    _mockWeatherForecastMysqlRepo.Setup(x => x.GetById(1)).Returns(result);
                 },
                 ExpectedResult = new weatherForecastModel.response
                 {
@@ -59,8 +60,8 @@ public class WeatherUsecaseTest
                WantError = true,
                Mock = () =>
                {
-                   dto? data = null;
-                   _mockWeatherForecastMysqlRepo.Setup(x => x.GetById(2)).Returns(data);
+                   (Exception? error, dto? res) result = (null, null);
+                   _mockWeatherForecastMysqlRepo.Setup(x => x.GetById(2)).Returns(result);
                },
                ExpectedResult = null,
            });
@@ -108,7 +109,8 @@ public class WeatherUsecaseTest
                             Summary = "summary"
                         }
                     };
-                    _mockWeatherForecastMysqlRepo.Setup(x => x.GetAll()).Returns(data);
+                    (Exception? ex, List<dto>? data) result = (null, data);
+                    _mockWeatherForecastMysqlRepo.Setup(x => x.GetAll()).Returns(result);
                 },
                 ExpectedResult = new List<response>() {
                     new response
@@ -128,8 +130,8 @@ public class WeatherUsecaseTest
                WantError = true,
                Mock = () =>
                {
-                   List<dto>? data = null;
-                   _mockWeatherForecastMysqlRepo.Setup(x => x.GetAll()).Returns(data);
+                   (Exception? ex, List<dto>? data) result = (null, null);
+                   _mockWeatherForecastMysqlRepo.Setup(x => x.GetAll()).Returns(result);
                },
                ExpectedResult = null,
            });

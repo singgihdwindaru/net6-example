@@ -16,15 +16,20 @@ public class weatherUsecase : IWeatherForecastUsecase
         try
         {
             var data = _weather.GetById(id);
-            if (data == null)
+            if (data.error != null)
+            {
+                throw data.error;
+            }
+            if (data.result == null)
             {
                 return null;
             }
+            
             result = new weatherForecastModel.response();
-            result.Summary = data.Summary;
-            result.Date = data.Date;
-            result.TemperatureC = data.TemperatureC;
-            result.TemperatureF = data.TemperatureF;
+            result.Summary = data.result.Summary;
+            result.Date = data.result.Date;
+            result.TemperatureC = data.result.TemperatureC;
+            result.TemperatureF = data.result.TemperatureF;
             return result;
         }
         catch (System.Exception e)
@@ -36,16 +41,21 @@ public class weatherUsecase : IWeatherForecastUsecase
 
     public IEnumerable<weatherForecastModel.response>? GetData()
     {
-        
+
         List<weatherForecastModel.response> result = new List<weatherForecastModel.response>();
         try
         {
             var data = _weather.GetAll();
-            if (data == null)
+            if (data.error != null)
+            {
+                throw data.error;
+            }
+            if (data.result == null)
             {
                 return null;
             }
-            foreach (var item in data)
+
+            foreach (var item in data.result)
             {
                 weatherForecastModel.response rsp = new weatherForecastModel.response();
                 rsp.Summary = item.Summary;
