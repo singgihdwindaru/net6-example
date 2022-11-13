@@ -13,8 +13,8 @@ public class weatherForecastModel
     }
     public interface IWeatherForecastUsecase
     {
-        IEnumerable<weatherForecastModel.response>? GetData();
-        weatherForecastModel.response? GetById(long id);
+        (Exception? error, IEnumerable<response>? result) GetAll();
+        (Exception? error, response? result) GetById(long id);
     }
 
     public class dto

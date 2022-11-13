@@ -6,7 +6,6 @@ namespace Todo.Api.services.weather.repository.mysql;
 
 public partial class mysqlWeatherForecast : IWeatherForecastMysqlRepo
 {
-
     protected readonly IDbConnection _db;
     public mysqlWeatherForecast(IDbConnection db)
     {

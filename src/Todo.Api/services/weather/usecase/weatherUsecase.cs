@@ -10,9 +10,9 @@ public class weatherUsecase : IWeatherForecastUsecase
     {
         _weather = weather;
     }
-    public weatherForecastModel.response? GetById(long id)
+    public (Exception? error, response? result) GetById(long id)
     {
-        weatherForecastModel.response result;
+        (Exception? error, response? data) result = (null, null);
         try
         {
             var data = _weather.GetById(id);
@@ -22,27 +22,26 @@ public class weatherUsecase : IWeatherForecastUsecase
             }
             if (data.result == null)
             {
-                return null;
+                return result;
             }
-            
-            result = new weatherForecastModel.response();
-            result.Summary = data.result.Summary;
-            result.Date = data.result.Date;
-            result.TemperatureC = data.result.TemperatureC;
-            result.TemperatureF = data.result.TemperatureF;
+
+            result.data = new weatherForecastModel.response();
+            result.data.Summary = data.result.Summary;
+            result.data.Date = data.result.Date;
+            result.data.TemperatureC = data.result.TemperatureC;
+            result.data.TemperatureF = data.result.TemperatureF;
             return result;
         }
         catch (System.Exception e)
         {
-            _ = e.Message;
-            return null;
+            result.error = e;
+            return result;
         }
     }
 
-    public IEnumerable<weatherForecastModel.response>? GetData()
+    public (Exception? error, IEnumerable<response>? result) GetAll()
     {
-
-        List<weatherForecastModel.response> result = new List<weatherForecastModel.response>();
+        (Exception? error, IEnumerable<response>? data) result = (null, null);
         try
         {
             var data = _weather.GetAll();
@@ -52,24 +51,26 @@ public class weatherUsecase : IWeatherForecastUsecase
             }
             if (data.result == null)
             {
-                return null;
+                return result;
             }
-
+            
+            List<response> weatherResponse = new List<response>();
             foreach (var item in data.result)
             {
-                weatherForecastModel.response rsp = new weatherForecastModel.response();
+                response rsp = new response();
                 rsp.Summary = item.Summary;
                 rsp.Date = item.Date;
                 rsp.TemperatureC = item.TemperatureC;
                 rsp.TemperatureF = item.TemperatureF;
-                result.Add(rsp);
+                weatherResponse.Add(rsp);
             }
+            result.data = weatherResponse;
             return result;
         }
         catch (System.Exception e)
         {
-            _ = e.Message;
-            return null;
+            result.error = e;
+            return result;
         }
     }
 }

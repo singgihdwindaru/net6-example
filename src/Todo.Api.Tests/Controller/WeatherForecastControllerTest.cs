@@ -37,7 +37,8 @@ public class WeatherForecastControllerTest
                         TemperatureF = 5,
                         Summary = "summary"
                     };
-                    _mockWeatherForecastUsecase.Setup(x => x.GetById(1)).Returns(data);
+                    (Exception? error, response? result) result = (null, data);
+                    _mockWeatherForecastUsecase.Setup(x => x.GetById(1)).Returns(result);
                 },
                 ExpectedResult = JsonConvert.SerializeObject(
                     new
@@ -63,8 +64,8 @@ public class WeatherForecastControllerTest
                WantError = true,
                Mock = () =>
                {
-                   response? data = null;
-                   _mockWeatherForecastUsecase.Setup(x => x.GetById(2)).Returns(data);
+                   (Exception? error, response? result) result = (new Exception("some error"), null);
+                   _mockWeatherForecastUsecase.Setup(x => x.GetById(2)).Returns(result);
                },
                ExpectedResult = JsonConvert.SerializeObject(
                    new
@@ -133,7 +134,8 @@ public class WeatherForecastControllerTest
                             Summary = "summary2"
                         }
                     };
-                    _mockWeatherForecastUsecase.Setup(x => x.GetData()).Returns(data);
+                    (Exception? error, IEnumerable<response>? result) result = (null, data);
+                    _mockWeatherForecastUsecase.Setup(x => x.GetAll()).Returns(result);
                 },
                 ExpectedResult = JsonConvert.SerializeObject(
                 new
@@ -160,8 +162,8 @@ public class WeatherForecastControllerTest
                WantError = true,
                Mock = () =>
                {
-                   IEnumerable<response>? data = null;
-                   _mockWeatherForecastUsecase.Setup(x => x.GetData()).Returns(data);
+                   (Exception? error, IEnumerable<response>? result) result = (new Exception("some error"), null);
+                   _mockWeatherForecastUsecase.Setup(x => x.GetAll()).Returns(result);
                },
                ExpectedResult = JsonConvert.SerializeObject(
                 new

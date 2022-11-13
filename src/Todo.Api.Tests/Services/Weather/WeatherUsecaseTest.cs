@@ -60,7 +60,7 @@ public class WeatherUsecaseTest
                WantError = true,
                Mock = () =>
                {
-                   (Exception? error, dto? res) result = (null, null);
+                   (Exception? error, dto? res) result = (new Exception("some error"), null);
                    _mockWeatherForecastMysqlRepo.Setup(x => x.GetById(2)).Returns(result);
                },
                ExpectedResult = null,
@@ -82,8 +82,11 @@ public class WeatherUsecaseTest
 
         var usecase = new weatherUsecase(_mockWeatherForecastMysqlRepo.Object);
         int? id = test.Args as int?;
-        weatherForecastModel.response? actualResult = usecase.GetById(id.HasValue ? id.Value : -1);
-        test.ExpectedResult?.Should().BeEquivalentTo(actualResult);
+        var actualResult = usecase.GetById(id.HasValue ? id.Value : -1);
+
+        bool isError = actualResult.error == null ? false : true;
+        test.WantError.Should().Be(isError);
+        test.ExpectedResult?.Should().BeEquivalentTo(actualResult.result);
     }
     #endregion End Of TestGetById
 
@@ -130,7 +133,7 @@ public class WeatherUsecaseTest
                WantError = true,
                Mock = () =>
                {
-                   (Exception? ex, List<dto>? data) result = (null, null);
+                   (Exception? ex, List<dto>? data) result = (new Exception("some error"), null);
                    _mockWeatherForecastMysqlRepo.Setup(x => x.GetAll()).Returns(result);
                },
                ExpectedResult = null,
@@ -145,14 +148,17 @@ public class WeatherUsecaseTest
 
     [Theory]
     [MemberData(nameof(TestGetDataCases))]
-    public void TestGetData(TestTableBuilder Case)
+    public void TestGetAll(TestTableBuilder Case)
     {
         TestTable test = Case.Build();
         test.Mock();
 
         var usecase = new weatherUsecase(_mockWeatherForecastMysqlRepo.Object);
-        IEnumerable<response>? actualResult = usecase.GetData();
-        test.ExpectedResult?.Should().BeEquivalentTo((!test.WantError ? actualResult?.ToList() : actualResult));
+        var actualResult = usecase.GetAll();
+
+        bool isError = actualResult.error == null ? false : true;
+        test.WantError.Should().Be(isError);
+        test.ExpectedResult?.Should().BeEquivalentTo(actualResult.result);
     }
 
     #endregion End Of TestGetData

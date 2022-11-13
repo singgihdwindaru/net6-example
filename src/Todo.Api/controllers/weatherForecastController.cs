@@ -22,48 +22,35 @@ public class WeatherForecastController : ControllerBase
     public IActionResult Get()
     {
         httpResponse.Root<object> rsp;
-        try
+        var weatherResponse = _weatherForecast.GetAll();
+        if (weatherResponse.error != null)
         {
-            IEnumerable<response> data = _weatherForecast.GetData();
-            if (data == null)
-            {
-                int code = StatusCodes.Status500InternalServerError;
-                var msg = "Internal Server Error";
-                rsp = helper.HttpResponseColumnRows<object>(code, msg, true, new List<response>());
-                return StatusCode(code, rsp);
-            }
-            rsp = helper.HttpResponseColumnRows<object>(200, "success", false, data.ToList());
-        }
-        catch (System.Exception e)
-        {
-            // TODO : create a nice error handling
-            return StatusCode((int)HttpStatusCode.InternalServerError, e);
+            int code = StatusCodes.Status500InternalServerError;
+            var msg = "Internal Server Error";
+            rsp = helper.HttpResponseColumnRows<object>(code, msg, true, new List<response>());
+            return StatusCode(code, rsp);
         }
 
+        if (weatherResponse.result == null)
+        {
+            weatherResponse.result = new List<response>();
+        }
+        rsp = helper.HttpResponseColumnRows<object>(200, "success", false, weatherResponse.result);
         return Ok(rsp);
     }
     [HttpGet("~/WeatherForecast/{id}")]
     public IActionResult GetById(long id)
     {
         httpResponse.Root<object>? rsp;
-        try
+        var data = _weatherForecast.GetById(id);
+        if (data.error != null)
         {
-            response? data = _weatherForecast.GetById(id);
-            if (data == null)
-            {
-                int code = StatusCodes.Status500InternalServerError;
-                var msg = "Internal Server Error";
-                rsp = helper.HttpResponse(code, msg, true, null);
-                return StatusCode(code, rsp);
-            }
-            rsp = helper.HttpResponse(200, "success", false, data);
+            int code = StatusCodes.Status500InternalServerError;
+            var msg = "Internal Server Error";
+            rsp = helper.HttpResponse(code, msg, true, null);
+            return StatusCode(code, rsp);
         }
-        catch (System.Exception e)
-        {
-            // TODO : create a nice error handling
-            return StatusCode((int)HttpStatusCode.InternalServerError, e);
-        }
-
+        rsp = helper.HttpResponse(200, "success", false, data.result);
         return Ok(rsp);
     }
 }
