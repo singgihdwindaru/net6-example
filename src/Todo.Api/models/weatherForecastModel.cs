@@ -8,15 +8,15 @@ public class weatherForecastModel
     }
     public interface IWeatherForecastMysqlRepo
     {
-        IEnumerable<weatherForecastModel.dto>? GetAll();
-        weatherForecastModel.dto? GetById(long id);
+        (Exception? error, IEnumerable<dto>? result) GetAll();
+        (Exception? error, dto? result) GetById(long id);
     }
     public interface IWeatherForecastUsecase
     {
         IEnumerable<weatherForecastModel.response>? GetData();
         weatherForecastModel.response? GetById(long id);
     }
-    
+
     public class dto
     {
         public long id { get; set; }

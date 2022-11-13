@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using Todo.Api.models;
 using Todo.Api.services.weather.repository.mysql;
 using Todo.Api.services.weather.repository.nosql;
@@ -13,7 +14,14 @@ void initOthers(WebApplicationBuilder builder)
 }
 void initRepositories(WebApplicationBuilder builder)
 {
-    builder.Services.AddScoped<IWeatherForecastMysqlRepo, mysqlWeatherForecast>(x => new mysqlWeatherForecast(connStr));
+    var mysqlConn = new MySqlConnection(connStr);
+
+    // builder.Services.AddScoped<IWeatherForecastMysqlRepo, mysqlWeatherForecast>(x => new mysqlWeatherForecast(connStr));
+    builder.Services.AddScoped<IWeatherForecastMysqlRepo, mysqlWeatherForecast>(x =>
+    {
+        var repo = new mysqlWeatherForecast(mysqlConn);
+        return repo;
+    });
     builder.Services.AddScoped<IWeatherForecastNoSqlRepo, nosqlWeatherForecast>();
 }
 void initUsecase(WebApplicationBuilder builder)
