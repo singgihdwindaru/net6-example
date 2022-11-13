@@ -1,11 +1,7 @@
 using Moq;
-using Todo.Api.controllers;
 using Todo.Api.models;
-using Microsoft.AspNetCore.Mvc;
 using FluentAssertions;
-using System.Text.Json;
 using static Todo.Api.models.weatherForecastModel;
-using Newtonsoft.Json;
 using Todo.Api.services.weather.usecase;
 
 namespace Todo.Api.Tests.Services.Weather;
