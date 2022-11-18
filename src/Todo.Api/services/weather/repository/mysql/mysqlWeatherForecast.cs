@@ -1,6 +1,8 @@
 using System.Data;
 using Todo.Api.models;
 using static Todo.Api.models.weatherForecastModel;
+using MySql.Data.MySqlClient;
+
 namespace Todo.Api.services.weather.repository.mysql;
 
 public partial class mysqlWeatherForecast : IWeatherForecastMysqlRepo
@@ -10,7 +12,23 @@ public partial class mysqlWeatherForecast : IWeatherForecastMysqlRepo
     {
         _db = db;
     }
-
+    protected void fetch(List<dto> result, IDbCommand cmd)
+    {
+        using (IDataReader rdr = cmd.ExecuteReader())
+        {
+            // Fetch data
+            while (rdr.Read())
+            {
+                weatherForecastModel.dto dto = new weatherForecastModel.dto();
+                dto.id = Convert.ToInt64(rdr["id"]);
+                dto.Summary = rdr["summary"].ToString();
+                dto.TemperatureC = Convert.ToInt32(rdr["temperatureC"]);
+                dto.TemperatureF = Convert.ToInt32(rdr["temperatureF"]);
+                dto.Date = Convert.ToDateTime(rdr["date"]);
+                result.Add(dto);
+            }
+        }
+    }
     public (Exception? error, IEnumerable<dto>? result) GetAll()
     {
         (Exception? error, IEnumerable<dto>? data) result = (null, null);
@@ -19,8 +37,6 @@ public partial class mysqlWeatherForecast : IWeatherForecastMysqlRepo
         {
             using (var dbConn = _db)
             {
-                // ConnectionState originalState = dbConn.State;
-                // if (originalState != ConnectionState.Open)
                 dbConn.Open();
 
                 IDbCommand command = dbConn.CreateCommand();
@@ -45,13 +61,13 @@ public partial class mysqlWeatherForecast : IWeatherForecastMysqlRepo
         {
             using (var dbConn = _db)
             {
-                ConnectionState originalState = dbConn.State;
-                if (originalState != ConnectionState.Open)
-                    dbConn.Open();
+                dbConn.Open();
 
                 IDbCommand command = dbConn.CreateCommand();
                 command.CommandText = getById;
+                command.Parameters.Clear();
                 command.AddParameter("@id", id);
+
                 fetch(dto, command);
             }
         }
@@ -65,24 +81,19 @@ public partial class mysqlWeatherForecast : IWeatherForecastMysqlRepo
         return result;
     }
 
-    private void fetch(List<dto> result, IDbCommand cmd)
+    public Exception Insert(IEnumerable<dto>? data)
     {
-        using (IDataReader rdr = cmd.ExecuteReader())
-        {
-            // Fetch data
-            while (rdr.Read())
-            {
-                weatherForecastModel.dto dto = new weatherForecastModel.dto();
-                dto.id = Convert.ToInt64(rdr["id"]);
-                dto.Summary = rdr["summary"].ToString();
-                dto.TemperatureC = Convert.ToInt32(rdr["temperatureC"]);
-                dto.TemperatureF = Convert.ToInt32(rdr["temperatureF"]);
-                dto.Date = Convert.ToDateTime(rdr["date"]);
-                result.Add(dto);
-            }
-        }
-
+        throw new NotImplementedException();
     }
 
+    public Exception Update(IEnumerable<dto>? data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Exception Delete(long id)
+    {
+        throw new NotImplementedException();
+    }
 
 }

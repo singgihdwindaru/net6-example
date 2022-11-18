@@ -10,6 +10,9 @@ public class weatherForecastModel
     {
         (Exception? error, IEnumerable<dto>? result) GetAll();
         (Exception? error, dto? result) GetById(long id);
+        Exception Insert(IEnumerable<dto>? data);
+        Exception Update(IEnumerable<dto>? data);
+        Exception Delete(long id);
     }
     public interface IWeatherForecastUsecase
     {

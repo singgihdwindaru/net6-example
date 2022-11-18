@@ -47,10 +47,10 @@ public class WeatherForecastController : ControllerBase
         {
             int code = StatusCodes.Status500InternalServerError;
             var msg = "Internal Server Error";
-            rsp = helper.HttpResponse(code, msg, true, null);
+            rsp = helper.HttpResponse(code, msg, true, null, data.error);
             return StatusCode(code, rsp);
         }
-        rsp = helper.HttpResponse(200, "success", false, data.result);
+        rsp = helper.HttpResponse(200, "success", false, data.result, data.error);
         return Ok(rsp);
     }
 }

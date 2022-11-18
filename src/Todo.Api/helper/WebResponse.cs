@@ -6,7 +6,7 @@ namespace Todo.Api.Helper;
 
 public static class WebResponse
 {
-    public static httpResponse.Root<object>? HttpResponse(int code, string message, bool isError, object? data)
+    public static httpResponse.Root<object>? HttpResponse(int code, string message, bool isError, object? data, Exception? error)
     {
         // if (data == null)
         // {
@@ -17,6 +17,12 @@ public static class WebResponse
         rsp.message = message;
         rsp.error = isError;
         rsp.data = data;
+        if (error == null)
+        {
+            rsp.errors = (string?)null;
+            return rsp;
+        }
+        rsp.errors = error.Message;
         return rsp;
     }
     public static httpResponse.Root<T> HttpResponseColumnRows<T>(int code, string message, bool isError, T data) where T : class

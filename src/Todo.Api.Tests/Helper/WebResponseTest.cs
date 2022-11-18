@@ -24,7 +24,8 @@ public class WebResponseTest
                     code = 200,
                     message = "success",
                     error = false,
-                    data = "success"
+                    data = "success",
+                    errors = (string?) null
                 },
                 WantError = false
             });
@@ -43,10 +44,10 @@ public class WebResponseTest
         try
         {
             TestTable testData = Case.Build();
-            var definition = new { code = 0, message = "0", error = false, data = "" };
+            var definition = new { code = 0, message = "0", error = false, data = "", errors = (Exception?)null };
             var arg = JsonConvert.DeserializeAnonymousType(testData.Args?.ToString(), definition);
             // dynamic arg = testData.Args;
-            var actualResult = helper.HttpResponse(arg.code, arg.message, arg.error, arg.data);
+            var actualResult = helper.HttpResponse(arg.code, arg.message, arg.error, arg.data, arg.errors);
             testData.ExpectedResult?.Should().BeEquivalentTo(actualResult);
         }
         catch (System.Exception ex)

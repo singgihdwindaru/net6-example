@@ -52,7 +52,8 @@ public class WeatherForecastControllerTest
                             TemperatureC = 2,
                             TemperatureF = 5,
                             Summary = "summary"
-                        }
+                        },
+                        errors = (string?)null
                     }),
             });
 
@@ -73,7 +74,8 @@ public class WeatherForecastControllerTest
                        code = 500,
                        message = "Internal Server Error",
                        error = true,
-                       data = (string?)null
+                       data = (string?)null,
+                       errors = "some error"
                    }),
            });
         var data = new TheoryData<TestTableBuilder>();
@@ -150,7 +152,8 @@ public class WeatherForecastControllerTest
                             new object[]{now,2,5,"summary"},
                             new object[]{now,4,7,"summary2"},
                         },
-                    }
+                    },
+                    errors = (string?)null
                 }),
             });
 
@@ -175,7 +178,8 @@ public class WeatherForecastControllerTest
                     {
                         columns = new object[] { "Date", "TemperatureC", "TemperatureF", "Summary" },
                         rows = new object[] { },
-                    }
+                    },
+                    errors = "some error"
                 }),
            });
         var data = new TheoryData<TestTableBuilder>();
