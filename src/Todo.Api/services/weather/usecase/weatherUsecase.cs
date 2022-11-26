@@ -58,8 +58,8 @@ public class weatherUsecase : IWeatherForecastUsecase
             foreach (var item in data.result)
             {
                 response rsp = new response();
-                rsp.Summary = item.Summary;
                 rsp.Date = item.Date;
+                rsp.Summary = item.Summary;
                 rsp.TemperatureC = item.TemperatureC;
                 rsp.TemperatureF = item.TemperatureF;
                 weatherResponse.Add(rsp);

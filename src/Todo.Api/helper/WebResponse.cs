@@ -25,7 +25,7 @@ public static class WebResponse
         rsp.errors = error.Message;
         return rsp;
     }
-    public static httpResponse.Root<T> HttpResponseColumnRows<T>(int code, string message, bool isError, T data) where T : class
+    public static httpResponse.Root<T> HttpResponseColumnRows<T>(int code, string message, bool isError, Exception? error, T data) where T : class
     {
         httpResponse.Root<T> rsp = new httpResponse.Root<T>();
         rsp.code = code;
@@ -37,6 +37,13 @@ public static class WebResponse
         ConvertToColumnsAndRows(data, dr);
         T result = (T)(object)dr;
         rsp.data = result;
+                
+        if (error == null)
+        {
+            rsp.errors = (string?)null;
+            return rsp;
+        }
+        rsp.errors = error.Message;
         return rsp;
     }
     public static void ConvertToColumnsAndRows<T>(T values, httpResponse.DataColumnRow data) where T : class

@@ -27,7 +27,7 @@ public class WeatherForecastController : ControllerBase
         {
             int code = StatusCodes.Status500InternalServerError;
             var msg = "Internal Server Error";
-            rsp = helper.HttpResponseColumnRows<object>(code, msg, true, new List<response>());
+            rsp = helper.HttpResponseColumnRows<object>(code, msg, true, weatherResponse.error, new List<response>());
             return StatusCode(code, rsp);
         }
 
@@ -35,7 +35,7 @@ public class WeatherForecastController : ControllerBase
         {
             weatherResponse.result = new List<response>();
         }
-        rsp = helper.HttpResponseColumnRows<object>(200, "success", false, weatherResponse.result);
+        rsp = helper.HttpResponseColumnRows<object>(200, "success", false, null, weatherResponse.result);
         return Ok(rsp);
     }
     [HttpGet("~/WeatherForecast/{id}")]
