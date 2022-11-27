@@ -4,30 +4,51 @@ namespace Todo.Api.Tests;
 
 public class TestTableBuilder : IXunitSerializable
 {
-    private string _testName;
-    private readonly TestTable _testTable;
-    public TestTableBuilder() { }// required for deserializer
-    
-    public TestTableBuilder(TestTable testTable)
+     public int Index { get; private set; }
+    public TestTable _testTable { get; private set; }
+    public TestTableBuilder()
     {
-        _testName = testTable.TestName;
+    }
+    public TestTableBuilder(int indexTest, TestTable testTable)
+    {
+        Index = indexTest;
         _testTable = testTable;
+
+        /* Note  : 
+          Mock= mock; // cannot serialize/Deserialize Type Action delegate in current xunit v2.xx 
+        */
     }
-    public TestTable Build()
-    {
-        return _testTable;
-    }
+
     public void Deserialize(IXunitSerializationInfo info)
     {
-        _testName = info.GetValue<string>("TestName");
+        try
+        {
+            Index = info.GetValue<int>("Index");
+            _testTable = info.GetValue<TestTable>("TestTable");
+        }
+        catch (Exception ex)
+        {
+            _ = ex.Message;
+            throw;
+        }
     }
 
     public void Serialize(IXunitSerializationInfo info)
     {
-        info.AddValue("TestName", _testName);
+        try
+        {
+            info.AddValue("Index", Index);
+            info.AddValue("TestTable", _testTable, typeof(TestTable));
+        }
+        catch (Exception ex)
+        {
+            _ = ex.Message;
+            throw;
+        }
     }
+
     public override string ToString()
     {
-        return _testName;
+        return _testTable.TestName;
     }
 }

@@ -15,66 +15,64 @@ public class WeatherUsecaseTest
         _mockWeatherForecastMysqlRepo = new Mock<IWeatherForecastMysqlRepo>();
     }
     #region TestGetById
-    public static TheoryData<TestTableBuilder> TestGetByIdCases()
+    private static TestTable[] tcGetById
     {
-        List<TestTable> tp = new List<TestTable>();
-        var now = DateTime.Now;
-
-        tp.Add(
-            new TestTable
+        get
+        {
+            var now = DateTime.Now;
+            return new TestTable[]
             {
-                TestName = "#1 success",
-                Args = 1,
-                WantError = false,
-                Mock = () =>
+                new TestTable
                 {
-                    dto data = new dto
+                    TestName = "#1 success",
+                    Args = 1,
+                    WantError = false,
+                    Mock = () =>
                     {
-                        id = 1,
+                        dto data = new dto
+                        {
+                            id = 1,
+                            Date = now,
+                            TemperatureC = 2,
+                            TemperatureF = 5,
+                            Summary = "summary"
+                        };
+                        (Exception? error, dto? res) result = (null, data);
+                        _mockWeatherForecastMysqlRepo.Setup(x => x.GetById(1)).Returns(result);
+                    },
+                    ExpectedResult = new weatherForecastModel.response
+                    {
                         Date = now,
                         TemperatureC = 2,
                         TemperatureF = 5,
                         Summary = "summary"
-                    };
-                    (Exception? error, dto? res) result = (null, data);
-                    _mockWeatherForecastMysqlRepo.Setup(x => x.GetById(1)).Returns(result);
+                    },
                 },
-                ExpectedResult = new weatherForecastModel.response
+                new TestTable
                 {
-                    Date = now,
-                    TemperatureC = 2,
-                    TemperatureF = 5,
-                    Summary = "summary"
-                },
-            });
-
-        tp.Add(
-           new TestTable
-           {
-               TestName = "#2 Error",
-               Args = 2,
-               WantError = true,
-               Mock = () =>
-               {
-                   (Exception? error, dto? res) result = (new Exception("some error"), null);
-                   _mockWeatherForecastMysqlRepo.Setup(x => x.GetById(2)).Returns(result);
-               },
-               ExpectedResult = null,
-           });
-        var data = new TheoryData<TestTableBuilder>();
-        foreach (var item in tp)
-        {
-            data.Add(new TestTableBuilder(item));
+                    TestName = "#2 Error",
+                    Args = 2,
+                    WantError = true,
+                    Mock = () =>
+                    {
+                        (Exception? error, dto? res) result = (new Exception("some error"), null);
+                        _mockWeatherForecastMysqlRepo.Setup(x => x.GetById(2)).Returns(result);
+                    },
+                    ExpectedResult = null,
+                }
+            };
         }
-        return data;
     }
-
+    public static TheoryData<TestTableBuilder> tdGetById()
+    {
+        return TestTable.BuildTestTable(tcGetById);
+    }
     [Theory]
-    [MemberData(nameof(TestGetByIdCases))]
+    [MemberData(nameof(tdGetById))]
     public void TestGetById(TestTableBuilder Case)
     {
-        TestTable test = Case.Build();
-        test.Mock();
+        TestTable test = Case._testTable;
+        tcGetById[Case.Index].Mock.Invoke();
 
         var usecase = new weatherUsecase(_mockWeatherForecastMysqlRepo.Object);
         int? id = test.Args as int?;
@@ -87,67 +85,66 @@ public class WeatherUsecaseTest
     #endregion End Of TestGetById
 
     #region TestGetData
-    public static TheoryData<TestTableBuilder> TestGetDataCases()
+    public static TestTable[] tcGetAll
     {
-        List<TestTable> tp = new List<TestTable>();
-        var now = DateTime.Now;
-
-        tp.Add(
-            new TestTable
+        get
+        {
+            var now = DateTime.Now;
+            return new TestTable[]
             {
-                TestName = "#1 success",
-                WantError = false,
-                Mock = () =>
+                new TestTable
                 {
-                    List<dto> data = new List<dto>() {
-                        new dto {
-                            id = 1,
+                    TestName = "#1 success",
+                    WantError = false,
+                    Mock = () =>
+                    {
+                        List<dto> data = new List<dto>() {
+                            new dto {
+                                id = 1,
+                                Date = now,
+                                TemperatureC = 2,
+                                TemperatureF = 5,
+                                Summary = "summary"
+                            }
+                        };
+                        (Exception? ex, List<dto>? data) result = (null, data);
+                        _mockWeatherForecastMysqlRepo.Setup(x => x.GetAll()).Returns(result);
+                    },
+                    ExpectedResult = new List<response>() {
+                        new response
+                        {
                             Date = now,
                             TemperatureC = 2,
                             TemperatureF = 5,
                             Summary = "summary"
                         }
-                    };
-                    (Exception? ex, List<dto>? data) result = (null, data);
-                    _mockWeatherForecastMysqlRepo.Setup(x => x.GetAll()).Returns(result);
+                    },
                 },
-                ExpectedResult = new List<response>() {
-                    new response
+
+                new TestTable
+                {
+                    TestName = "#2 Error",
+                    WantError = true,
+                    Mock = () =>
                     {
-                        Date = now,
-                        TemperatureC = 2,
-                        TemperatureF = 5,
-                        Summary = "summary"
-                    }
-                },
-            });
-
-        tp.Add(
-           new TestTable
-           {
-               TestName = "#2 Error",
-               WantError = true,
-               Mock = () =>
-               {
-                   (Exception? ex, List<dto>? data) result = (new Exception("some error"), null);
-                   _mockWeatherForecastMysqlRepo.Setup(x => x.GetAll()).Returns(result);
-               },
-               ExpectedResult = null,
-           });
-        var data = new TheoryData<TestTableBuilder>();
-        foreach (var item in tp)
-        {
-            data.Add(new TestTableBuilder(item));
+                        (Exception? ex, List<dto>? data) result = (new Exception("some error"), null);
+                        _mockWeatherForecastMysqlRepo.Setup(x => x.GetAll()).Returns(result);
+                    },
+                    ExpectedResult = null,
+                }
+            };
         }
-        return data;
     }
-
+    public static TheoryData<TestTableBuilder> tdGetAll()
+    {
+        return TestTable.BuildTestTable(tcGetAll);
+    }
     [Theory]
-    [MemberData(nameof(TestGetDataCases))]
+    [MemberData(nameof(tdGetAll))]
     public void TestGetAll(TestTableBuilder Case)
     {
-        TestTable test = Case.Build();
-        test.Mock();
+        TestTable test = Case._testTable;
+        tcGetAll[Case.Index].Mock.Invoke();
 
         var usecase = new weatherUsecase(_mockWeatherForecastMysqlRepo.Object);
         var actualResult = usecase.GetAll();
