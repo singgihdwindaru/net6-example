@@ -71,16 +71,16 @@ public class WeatherUsecaseTest
     [MemberData(nameof(tdGetById))]
     public void TestGetById(TestTableBuilder Case)
     {
-        TestTable test = Case._testTable;
-        tcGetById[Case.Index].Mock.Invoke();
+        TestTable testData = tcGetById[Case.Index];
+        testData.Mock.Invoke();
 
         var usecase = new weatherUsecase(_mockWeatherForecastMysqlRepo.Object);
-        int? id = test.Args as int?;
+        int? id = testData.Args as int?;
         var actualResult = usecase.GetById(id.HasValue ? id.Value : -1);
 
         bool isError = actualResult.error == null ? false : true;
-        test.WantError.Should().Be(isError);
-        test.ExpectedResult?.Should().BeEquivalentTo(actualResult.result);
+        testData.WantError.Should().Be(isError);
+        testData.ExpectedResult?.Should().BeEquivalentTo(actualResult.result);
     }
     #endregion End Of TestGetById
 
@@ -143,15 +143,15 @@ public class WeatherUsecaseTest
     [MemberData(nameof(tdGetAll))]
     public void TestGetAll(TestTableBuilder Case)
     {
-        TestTable test = Case._testTable;
-        tcGetAll[Case.Index].Mock.Invoke();
+        TestTable testData = tcGetAll[Case.Index];
+        testData.Mock.Invoke();
 
         var usecase = new weatherUsecase(_mockWeatherForecastMysqlRepo.Object);
         var actualResult = usecase.GetAll();
 
         bool isError = actualResult.error == null ? false : true;
-        test.WantError.Should().Be(isError);
-        test.ExpectedResult?.Should().BeEquivalentTo(actualResult.result);
+        testData.WantError.Should().Be(isError);
+        testData.ExpectedResult?.Should().BeEquivalentTo(actualResult.result);
     }
 
     #endregion End Of TestGetData

@@ -39,8 +39,7 @@ public class WebResponseTest
     {
         try
         {
-            TestTable testData = Case._testTable;
-            tcHttpResponse[Case.Index].Mock.Invoke();
+            TestTable testData = tcHttpResponse[Case.Index];
 
             var definition = new { code = 0, message = "0", error = false, data = "", errors = (Exception?)null };
             var arg = JsonConvert.DeserializeAnonymousType(testData.Args?.ToString(), definition);

@@ -3,7 +3,7 @@ using Xunit.Abstractions;
 
 namespace Todo.Api.Tests;
 
-public class TestTable : IXunitSerializable
+public class TestTable 
 {
     public TestTable()
     {
@@ -15,30 +15,14 @@ public class TestTable : IXunitSerializable
     public object? ExpectedResult { get; set; }
     public Action Mock { get; set; }
 
-    public void Deserialize(IXunitSerializationInfo info)
-    {
-        TestName = info.GetValue<string>("TestName");
-        Args = info.GetValue<object>("Args");
-        WantError = info.GetValue<bool>("WantError");
-        ExpectedResult = info.GetValue<object>("ExpectedResult");
-    }
-
-    public void Serialize(IXunitSerializationInfo info)
-    {
-        info.AddValue("TestName", TestName);
-        info.AddValue("Args", Args);
-        info.AddValue("WantError", WantError, typeof(bool));
-        info.AddValue("ExpectedResult", ExpectedResult);
-    }
-
      public static TheoryData<TestTableBuilder> BuildTestTable(TestTable[] tc)
     {
-        TheoryData<TestTableBuilder> t11 = new TheoryData<TestTableBuilder>();
+        TheoryData<TestTableBuilder> td = new TheoryData<TestTableBuilder>();
         for (int i = 0; i < tc.Length; i++)
         {
-            t11.Add(new TestTableBuilder(i, tc[i]));
+            td.Add(new TestTableBuilder(i, tc[i].TestName));
         }
-        return t11;
+        return td;
     }
 }
 

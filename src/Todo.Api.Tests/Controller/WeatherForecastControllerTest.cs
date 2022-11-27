@@ -89,8 +89,8 @@ public class WeatherForecastControllerTest
     [MemberData(nameof(tdGetById))]
     public void TestGetById(TestTableBuilder Case)
     {
-        TestTable testData = Case._testTable;
-        tcGetById[Case.Index].Mock.Invoke();
+        TestTable testData = tcGetById[Case.Index];
+        testData.Mock.Invoke();
 
         var controller = new WeatherForecastController(_mockWeatherForecastUsecase.Object);
         // Act
@@ -110,7 +110,7 @@ public class WeatherForecastControllerTest
     {
         get
         {
-            TestTable[] result = new TestTable[2]
+            TestTable[] result = new TestTable[]
             {
                  new TestTable
                   {
@@ -193,8 +193,8 @@ public class WeatherForecastControllerTest
     [MemberData(nameof(tdGet))]
     public void TestGet(TestTableBuilder Case)
     {
-        TestTable testData = Case._testTable;
-        tcGet[Case.Index].Mock.Invoke();
+        TestTable testData = tcGet[Case.Index];
+        testData.Mock.Invoke();
 
         var controller = new WeatherForecastController(_mockWeatherForecastUsecase.Object);
         IActionResult actionResult = controller.Get();
