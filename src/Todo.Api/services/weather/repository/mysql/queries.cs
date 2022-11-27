@@ -5,6 +5,6 @@ public partial class mysqlWeatherForecast {
     SELECT id, summary, temperatureC, temperatureF, date 
     FROM forecast ";
 
-    static string getById = selectAll + @"
+    public static string getById = selectAll + @"
     WHERE id=@id";
 }

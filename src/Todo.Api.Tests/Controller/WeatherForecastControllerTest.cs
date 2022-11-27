@@ -12,17 +12,18 @@ namespace Todo.Api.Tests.Controller;
 public class WeatherForecastControllerTest
 {
     private static Mock<IWeatherForecastUsecase> _mockWeatherForecastUsecase;
+    public static DateTime now => new DateTime(2022, 11, 27, 5, 10, 20);
+
     static WeatherForecastControllerTest()
     {
         _mockWeatherForecastUsecase = new Mock<IWeatherForecastUsecase>();
     }
     #region TestGetById
-    public static TheoryData<TestTableBuilder> TestGetByIdCases()
+    public static TestTable[] tcGetById
     {
-        List<TestTable> tp = new List<TestTable>();
-        var now = DateTime.Now;
-
-        tp.Add(
+        get
+        {
+            return new TestTable[] {
             new TestTable
             {
                 TestName = "#1 success",
@@ -37,7 +38,8 @@ public class WeatherForecastControllerTest
                         TemperatureF = 5,
                         Summary = "summary"
                     };
-                    _mockWeatherForecastUsecase.Setup(x => x.GetById(1)).Returns(data);
+                    (Exception? error, response? result) result = (null, data);
+                    _mockWeatherForecastUsecase.Setup(x => x.GetById(1)).Returns(result);
                 },
                 ExpectedResult = JsonConvert.SerializeObject(
                     new
@@ -51,11 +53,10 @@ public class WeatherForecastControllerTest
                             TemperatureC = 2,
                             TemperatureF = 5,
                             Summary = "summary"
-                        }
+                        },
+                        errors = (string?)null
                     }),
-            });
-
-        tp.Add(
+            },
            new TestTable
            {
                TestName = "#2 Error",
@@ -63,8 +64,8 @@ public class WeatherForecastControllerTest
                WantError = true,
                Mock = () =>
                {
-                   response? data = null;
-                   _mockWeatherForecastUsecase.Setup(x => x.GetById(2)).Returns(data);
+                   (Exception? error, response? result) result = (new Exception("some error"), null);
+                   _mockWeatherForecastUsecase.Setup(x => x.GetById(2)).Returns(result);
                },
                ExpectedResult = JsonConvert.SerializeObject(
                    new
@@ -72,23 +73,24 @@ public class WeatherForecastControllerTest
                        code = 500,
                        message = "Internal Server Error",
                        error = true,
-                       data = (string?)null
+                       data = (string?)null,
+                       errors = "some error"
                    }),
-           });
-        var data = new TheoryData<TestTableBuilder>();
-        foreach (var item in tp)
-        {
-            data.Add(new TestTableBuilder(item));
+           }
+        };
         }
-        return data;
     }
 
+    public static TheoryData<TestTableBuilder> tdGetById()
+    {
+        return TestTable.BuildTestTable(tcGetById);
+    }
     [Theory]
-    [MemberData(nameof(TestGetByIdCases))]
+    [MemberData(nameof(tdGetById))]
     public void TestGetById(TestTableBuilder Case)
     {
-        TestTable testData = Case.Build();
-        testData.Mock();
+        TestTable testData = tcGetById[Case.Index];
+        testData.Mock.Invoke();
 
         var controller = new WeatherForecastController(_mockWeatherForecastUsecase.Object);
         // Act
@@ -104,92 +106,95 @@ public class WeatherForecastControllerTest
     #endregion End of TestGetById
 
     #region  TestGet
-    public static TheoryData<TestTableBuilder> TestGetCases()
+    public static TestTable[] tcGet
     {
-        List<TestTable> tp = new List<TestTable>();
-        var now = DateTime.Now;
-
-        tp.Add(
-            new TestTable
-            {
-                TestName = "#1 success",
-                Args = "",
-                WantError = false,
-                Mock = () =>
-                {
-                    IEnumerable<response> data = new List<response>(){
-                        new response
-                        {
-                            Date = now,
-                            TemperatureC = 2,
-                            TemperatureF = 5,
-                            Summary = "summary"
-                        },
-                        new response
-                        {
-                            Date = now,
-                            TemperatureC = 4,
-                            TemperatureF = 7,
-                            Summary = "summary2"
-                        }
-                    };
-                    _mockWeatherForecastUsecase.Setup(x => x.GetData()).Returns(data);
-                },
-                ExpectedResult = JsonConvert.SerializeObject(
-                new
-                {
-                    code = 200,
-                    message = "success",
-                    error = false,
-                    data = new
-                    {
-                        columns = new object[] { "Date", "TemperatureC", "TemperatureF", "Summary" },
-                        rows = new List<object>(){
-                            new object[]{now,2,5,"summary"},
-                            new object[]{now,4,7,"summary2"},
-                        },
-                    }
-                }),
-            });
-
-        tp.Add(
-           new TestTable
-           {
-               TestName = "#2 Error",
-               Args = "",
-               WantError = true,
-               Mock = () =>
-               {
-                   IEnumerable<response>? data = null;
-                   _mockWeatherForecastUsecase.Setup(x => x.GetData()).Returns(data);
-               },
-               ExpectedResult = JsonConvert.SerializeObject(
-                new
-                {
-                    code = 500,
-                    message = "Internal Server Error",
-                    error = true,
-                    data = new
-                    {
-                        columns = new object[] { "Date", "TemperatureC", "TemperatureF", "Summary" },
-                        rows = new object[] { },
-                    }
-                }),
-           });
-        var data = new TheoryData<TestTableBuilder>();
-        foreach (var item in tp)
+        get
         {
-            data.Add(new TestTableBuilder(item));
+            TestTable[] result = new TestTable[]
+            {
+                 new TestTable
+                  {
+                      TestName = "#1 success",
+                      Args = "",
+                      WantError = false,
+                      Mock = () =>
+                      {
+                          IEnumerable<response> data = new List<response>(){
+                                  new response
+                                  {
+                                      Date = now,
+                                      TemperatureC = 2,
+                                      TemperatureF = 5,
+                                      Summary = "summary"
+                                  },
+                                  new response
+                                  {
+                                      Date = now,
+                                      TemperatureC = 4,
+                                      TemperatureF = 7,
+                                      Summary = "summary2"
+                                  }
+                          };
+                          (Exception? error, IEnumerable<response>? result) result = (null, data);
+                          _mockWeatherForecastUsecase.Setup(x => x.GetAll()).Returns(result);
+                      },
+                      ExpectedResult = JsonConvert.SerializeObject(
+                      new
+                      {
+                          code = 200,
+                          message = "success",
+                          error = false,
+                          data = new
+                          {
+                              columns = new object[] { "Date", "TemperatureC", "TemperatureF", "Summary" },
+                              rows = new List<object>(){
+                                      new object[]{now,2,5,"summary"},
+                                      new object[]{now,4,7,"summary2"},
+                              },
+                          },
+                          errors = (string?)null
+                      }),
+                  },
+                 new TestTable
+                  {
+                      TestName = "#2 Error",
+                      Args = "",
+                      WantError = true,
+                      Mock = () =>
+                      {
+                          (Exception? error, IEnumerable<response>? result) result = (new Exception("some error"), null);
+                          _mockWeatherForecastUsecase.Setup(x => x.GetAll()).Returns(result);
+                      },
+                      ExpectedResult = JsonConvert.SerializeObject(
+                       new
+                       {
+                           code = 500,
+                           message = "Internal Server Error",
+                           error = true,
+                           data = new
+                           {
+                               columns = new object[] { "Date", "TemperatureC", "TemperatureF", "Summary" },
+                               rows = new object[] { },
+                           },
+                           errors = "some error"
+                       }),
+                  },
+            };
+
+            return result;
         }
-        return data;
+    }
+    public static TheoryData<TestTableBuilder> tdGet()
+    {
+        return TestTable.BuildTestTable(tcGet);
     }
 
     [Theory]
-    [MemberData(nameof(TestGetCases))]
+    [MemberData(nameof(tdGet))]
     public void TestGet(TestTableBuilder Case)
     {
-        TestTable testData = Case.Build();
-        testData.Mock();
+        TestTable testData = tcGet[Case.Index];
+        testData.Mock.Invoke();
 
         var controller = new WeatherForecastController(_mockWeatherForecastUsecase.Object);
         IActionResult actionResult = controller.Get();

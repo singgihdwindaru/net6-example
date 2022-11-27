@@ -10,11 +10,11 @@ namespace Todo.Api.Tests.Helper;
 
 public class WebResponseTest
 {
-    public static TheoryData<TestTableBuilder> TestHttpResponseData()
+    public static TestTable[] tcHttpResponse
     {
-        List<TestTable> tp = new List<TestTable>();
-
-        tp.Add(
+        get
+        {
+            return new TestTable[] {
             new TestTable
             {
                 TestName = "#1 success",
@@ -24,29 +24,27 @@ public class WebResponseTest
                     code = 200,
                     message = "success",
                     error = false,
-                    data = "success"
+                    data = "success",
+                    errors = (string?) null
                 },
                 WantError = false
-            });
-        var data = new TheoryData<TestTableBuilder>();
-        foreach (var item in tp)
-        {
-            data.Add(new TestTableBuilder(item));
+            }
+        };
         }
-        return data;
     }
-
+    public static TheoryData<TestTableBuilder> tdHttpResponse => TestTable.BuildTestTable(tcHttpResponse);
     [Theory]
-    [MemberData(nameof(TestHttpResponseData))]
+    [MemberData(nameof(tdHttpResponse))]
     public void TestHttpResponse(TestTableBuilder Case)
     {
         try
         {
-            TestTable testData = Case.Build();
-            var definition = new { code = 0, message = "0", error = false, data = "" };
+            TestTable testData = tcHttpResponse[Case.Index];
+
+            var definition = new { code = 0, message = "0", error = false, data = "", errors = (Exception?)null };
             var arg = JsonConvert.DeserializeAnonymousType(testData.Args?.ToString(), definition);
             // dynamic arg = testData.Args;
-            var actualResult = helper.HttpResponse(arg.code, arg.message, arg.error, arg.data);
+            var actualResult = helper.HttpResponse(arg.code, arg.message, arg.error, arg.data, arg.errors);
             testData.ExpectedResult?.Should().BeEquivalentTo(actualResult);
         }
         catch (System.Exception ex)

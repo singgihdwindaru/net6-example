@@ -8,16 +8,17 @@ public class httpResponse
         public string message { get; set; }
         public bool error { get; set; }
         public T? data { get; set; }
-    }
-    public class DataColumnRow
+        public string? errors{get;set;}
+}
+public class DataColumnRow
+{
+    public List<string> columns { get; set; }
+    public List<List<object>> rows { get; set; }
+    public DataColumnRow()
     {
-        public List<string> columns { get; set; }
-        public List<List<object>> rows { get; set; }
-        public DataColumnRow()
-        {
-            columns = new List<string>();
-            rows = new List<List<object>>();
-        }
+        columns = new List<string>();
+        rows = new List<List<object>>();
     }
+}
 
 }
